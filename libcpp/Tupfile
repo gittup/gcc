@@ -1,0 +1,21 @@
+include_rules
+
+obj-y += charset.c
+obj-y += directives.c
+obj-y += directives-only.c
+obj-y += errors.c
+obj-y += expr.c
+obj-y += files.c
+obj-y += identifiers.c
+obj-y += init.c
+obj-y += lex.c
+obj-y += line-map.c
+obj-y += macro.c
+obj-y += mkdeps.c
+obj-y += pch.c
+obj-y += symtab.c
+obj-y += traditional.c
+obj-y += tupvar.c
+
+: foreach $(obj-y) |> ^ HOSTCC %f^ gcc -I. -I../include -Iinclude $(CFLAGS) -c %f -o %o |> %B.o {objs}
+: {objs} |> ^ AR %o^ rm -f %o; ar crs %o %f |> libcpp.a

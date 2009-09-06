@@ -1,0 +1,14 @@
+include_rules
+
+obj-y += decNumber.c
+obj-y += decContext.c
+obj-y += bid/decimal32.c
+obj-y += bid/decimal64.c
+obj-y += bid/decimal128.c
+obj-y += bid/bid2dpd_dpd2bid.c
+obj-y += bid/host-ieee32.c
+obj-y += bid/host-ieee64.c
+obj-y += bid/host-ieee128.c
+
+: foreach $(obj-y) |> ^ HOSTCC %f^ gcc -I. $(CFLAGS) -c %f -o %o |> %B.o {objs}
+: {objs} |> ^ AR %o^ rm -f %o; ar crs %o %f |> libdecnumber.a

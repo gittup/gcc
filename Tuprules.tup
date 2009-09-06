@@ -1,0 +1,3 @@
+CFLAGS += -W -Wall -Wwrite-strings -Wmissing-format-attribute -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -pedantic -Wno-long-long
+CFLAGS += -fno-common
+CFLAGS += -fomit-frame-pointer

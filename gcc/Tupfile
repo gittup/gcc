@@ -1,0 +1,690 @@
+include_rules
+
+obj-y += gcc.c
+obj-y += opts-common.c
+obj-y += gccspec.c
+obj-y += intl.c
+obj-y += prefix.c
+obj-y += version.c
+obj-y += config/i386/driver-i386.c
+
+backend-obj-y += insn-attrtab.c
+backend-obj-y += insn-automata.c
+backend-obj-y += insn-emit.c
+backend-obj-y += insn-extract.c
+backend-obj-y += insn-modes.c
+backend-obj-y += insn-opinit.c
+backend-obj-y += insn-output.c
+backend-obj-y += insn-peep.c
+backend-obj-y += insn-preds.c
+backend-obj-y += insn-recog.c
+backend-obj-y += ggc-page.c
+backend-obj-y += alias.c
+backend-obj-y += alloc-pool.c
+backend-obj-y += auto-inc-dec.c
+backend-obj-y += bb-reorder.c
+backend-obj-y += bitmap.c
+backend-obj-y += bt-load.c
+backend-obj-y += builtins.c
+backend-obj-y += caller-save.c
+backend-obj-y += calls.c
+backend-obj-y += cfg.c
+backend-obj-y += cfganal.c
+backend-obj-y += cfgbuild.c
+backend-obj-y += cfgcleanup.c
+backend-obj-y += cfgexpand.c
+backend-obj-y += cfghooks.c
+backend-obj-y += cfglayout.c
+backend-obj-y += cfgloop.c
+backend-obj-y += cfgloopanal.c
+backend-obj-y += cfgloopmanip.c
+backend-obj-y += cfgrtl.c
+backend-obj-y += combine.c
+backend-obj-y += combine-stack-adj.c
+backend-obj-y += convert.c
+backend-obj-y += coverage.c
+backend-obj-y += cse.c
+backend-obj-y += cselib.c
+backend-obj-y += dbxout.c
+backend-obj-y += dbgcnt.c
+backend-obj-y += dce.c
+backend-obj-y += ddg.c
+backend-obj-y += debug.c
+backend-obj-y += df-byte-scan.c
+backend-obj-y += df-core.c
+backend-obj-y += df-problems.c
+backend-obj-y += df-scan.c
+backend-obj-y += dfp.c
+backend-obj-y += diagnostic.c
+backend-obj-y += dojump.c
+backend-obj-y += dominance.c
+backend-obj-y += domwalk.c
+backend-obj-y += double-int.c
+backend-obj-y += dse.c
+backend-obj-y += dwarf2asm.c
+backend-obj-y += dwarf2out.c
+backend-obj-y += ebitmap.c
+backend-obj-y += emit-rtl.c
+backend-obj-y += et-forest.c
+backend-obj-y += except.c
+backend-obj-y += explow.c
+backend-obj-y += expmed.c
+backend-obj-y += expr.c
+backend-obj-y += final.c
+backend-obj-y += fixed-value.c
+backend-obj-y += fold-const.c
+backend-obj-y += function.c
+backend-obj-y += fwprop.c
+backend-obj-y += gcse.c
+backend-obj-y += genrtl.c
+backend-obj-y += ggc-common.c
+backend-obj-y += gimple.c
+backend-obj-y += gimple-iterator.c
+backend-obj-y += gimple-low.c
+backend-obj-y += gimple-pretty-print.c
+backend-obj-y += gimplify.c
+backend-obj-y += graph.c
+backend-obj-y += graphds.c
+backend-obj-y += graphite.c
+backend-obj-y += gtype-desc.c
+backend-obj-y += haifa-sched.c
+backend-obj-y += hooks.c
+backend-obj-y += ifcvt.c
+backend-obj-y += init-regs.c
+backend-obj-y += integrate.c
+backend-obj-y += ira.c
+backend-obj-y += ira-build.c
+backend-obj-y += ira-costs.c
+backend-obj-y += ira-conflicts.c
+backend-obj-y += ira-color.c
+backend-obj-y += ira-emit.c
+backend-obj-y += ira-lives.c
+backend-obj-y += jump.c
+backend-obj-y += lambda-code.c
+backend-obj-y += lambda-mat.c
+backend-obj-y += lambda-trans.c
+backend-obj-y += langhooks.c
+backend-obj-y += lcm.c
+backend-obj-y += lists.c
+backend-obj-y += loop-doloop.c
+backend-obj-y += loop-init.c
+backend-obj-y += loop-invariant.c
+backend-obj-y += loop-iv.c
+backend-obj-y += loop-unroll.c
+backend-obj-y += loop-unswitch.c
+backend-obj-y += lower-subreg.c
+backend-obj-y += mcf.c
+backend-obj-y += mode-switching.c
+backend-obj-y += modulo-sched.c
+backend-obj-y += omega.c
+backend-obj-y += omp-low.c
+backend-obj-y += optabs.c
+backend-obj-y += options.c
+backend-obj-y += opts.c
+backend-obj-y += params.c
+backend-obj-y += passes.c
+backend-obj-y += pointer-set.c
+backend-obj-y += postreload-gcse.c
+backend-obj-y += postreload.c
+backend-obj-y += predict.c
+backend-obj-y += pretty-print.c
+backend-obj-y += print-rtl.c
+backend-obj-y += print-tree.c
+backend-obj-y += profile.c
+backend-obj-y += real.c
+backend-obj-y += recog.c
+backend-obj-y += reg-stack.c
+backend-obj-y += reginfo.c
+backend-obj-y += regmove.c
+backend-obj-y += regrename.c
+backend-obj-y += regstat.c
+backend-obj-y += reload.c
+backend-obj-y += reload1.c
+backend-obj-y += reorg.c
+backend-obj-y += resource.c
+backend-obj-y += rtl-error.c
+backend-obj-y += rtl.c
+backend-obj-y += rtlanal.c
+backend-obj-y += rtlhooks.c
+backend-obj-y += sbitmap.c
+backend-obj-y += sched-deps.c
+backend-obj-y += sched-ebb.c
+backend-obj-y += sched-rgn.c
+backend-obj-y += sched-vis.c
+backend-obj-y += sdbout.c
+backend-obj-y += sel-sched-ir.c
+backend-obj-y += sel-sched-dump.c
+backend-obj-y += sel-sched.c
+backend-obj-y += simplify-rtx.c
+backend-obj-y += sparseset.c
+backend-obj-y += sreal.c
+backend-obj-y += stack-ptr-mod.c
+backend-obj-y += statistics.c
+backend-obj-y += stmt.c
+backend-obj-y += stor-layout.c
+backend-obj-y += stringpool.c
+backend-obj-y += targhooks.c
+backend-obj-y += timevar.c
+backend-obj-y += toplev.c
+backend-obj-y += tracer.c
+backend-obj-y += tree-affine.c
+backend-obj-y += tree-call-cdce.c
+backend-obj-y += tree-cfg.c
+backend-obj-y += tree-cfgcleanup.c
+backend-obj-y += tree-chrec.c
+backend-obj-y += tree-complex.c
+backend-obj-y += tree-data-ref.c
+backend-obj-y += tree-dfa.c
+backend-obj-y += tree-dump.c
+backend-obj-y += tree-eh.c
+backend-obj-y += tree-if-conv.c
+backend-obj-y += tree-into-ssa.c
+backend-obj-y += tree-iterator.c
+backend-obj-y += tree-loop-distribution.c
+backend-obj-y += tree-loop-linear.c
+backend-obj-y += tree-nested.c
+backend-obj-y += tree-nrv.c
+backend-obj-y += tree-object-size.c
+backend-obj-y += tree-optimize.c
+backend-obj-y += tree-outof-ssa.c
+backend-obj-y += tree-parloops.c
+backend-obj-y += tree-phinodes.c
+backend-obj-y += tree-predcom.c
+backend-obj-y += tree-pretty-print.c
+backend-obj-y += tree-profile.c
+backend-obj-y += tree-scalar-evolution.c
+backend-obj-y += tree-sra.c
+backend-obj-y += tree-switch-conversion.c
+backend-obj-y += tree-ssa-address.c
+backend-obj-y += tree-ssa-alias.c
+backend-obj-y += tree-ssa-ccp.c
+backend-obj-y += tree-ssa-coalesce.c
+backend-obj-y += tree-ssa-copy.c
+backend-obj-y += tree-ssa-copyrename.c
+backend-obj-y += tree-ssa-dce.c
+backend-obj-y += tree-ssa-dom.c
+backend-obj-y += tree-ssa-dse.c
+backend-obj-y += tree-ssa-forwprop.c
+backend-obj-y += tree-ssa-ifcombine.c
+backend-obj-y += tree-ssa-live.c
+backend-obj-y += tree-ssa-loop-ch.c
+backend-obj-y += tree-ssa-loop-im.c
+backend-obj-y += tree-ssa-loop-ivcanon.c
+backend-obj-y += tree-ssa-loop-ivopts.c
+backend-obj-y += tree-ssa-loop-manip.c
+backend-obj-y += tree-ssa-loop-niter.c
+backend-obj-y += tree-ssa-loop-prefetch.c
+backend-obj-y += tree-ssa-loop-unswitch.c
+backend-obj-y += tree-ssa-loop.c
+backend-obj-y += tree-ssa-math-opts.c
+backend-obj-y += tree-ssa-operands.c
+backend-obj-y += tree-ssa-phiopt.c
+backend-obj-y += tree-ssa-phiprop.c
+backend-obj-y += tree-ssa-pre.c
+backend-obj-y += tree-ssa-propagate.c
+backend-obj-y += tree-ssa-reassoc.c
+backend-obj-y += tree-ssa-sccvn.c
+backend-obj-y += tree-ssa-sink.c
+backend-obj-y += tree-ssa-structalias.c
+backend-obj-y += tree-ssa-ter.c
+backend-obj-y += tree-ssa-threadedge.c
+backend-obj-y += tree-ssa-threadupdate.c
+backend-obj-y += tree-ssa-uncprop.c
+backend-obj-y += tree-ssa.c
+backend-obj-y += tree-ssanames.c
+backend-obj-y += tree-stdarg.c
+backend-obj-y += tree-tailcall.c
+backend-obj-y += tree-vect-generic.c
+backend-obj-y += tree-vect-patterns.c
+backend-obj-y += tree-vectorizer.c
+backend-obj-y += tree-vrp.c
+backend-obj-y += tree.c
+backend-obj-y += value-prof.c
+backend-obj-y += var-tracking.c
+backend-obj-y += varasm.c
+backend-obj-y += varray.c
+backend-obj-y += vec.c
+backend-obj-y += vmsdbgout.c
+backend-obj-y += web.c
+backend-obj-y += xcoffout.c
+backend-obj-y += config/i386/i386.c
+backend-obj-y += config/host-linux.c
+backend-obj-y += cgraph.c
+backend-obj-y += cgraphbuild.c
+backend-obj-y += cgraphunit.c
+backend-obj-y += cppdefault.c
+backend-obj-y += incpath.c
+backend-obj-y += ipa-cp.c
+backend-obj-y += ipa-inline.c
+backend-obj-y += ipa-prop.c
+backend-obj-y += ipa-pure-const.c
+backend-obj-y += ipa-reference.c
+backend-obj-y += ipa-struct-reorg.c
+backend-obj-y += ipa-type-escape.c
+backend-obj-y += ipa-utils.c
+backend-obj-y += ipa.c
+backend-obj-y += matrix-reorg.c
+backend-obj-y += tree-inline.c
+backend-obj-y += tree-nomudflap.c
+backend-obj-y += varpool.c
+
+cc-obj-y += c-lang.c
+cc-obj-y += stub-objc.c
+cc-obj-y += attribs.c
+cc-obj-y += c-errors.c
+cc-obj-y += c-lex.c
+cc-obj-y += c-pragma.c
+cc-obj-y += c-decl.c
+cc-obj-y += c-typeck.c
+cc-obj-y += c-convert.c
+cc-obj-y += c-aux-info.c
+cc-obj-y += c-common.c
+cc-obj-y += c-opts.c
+cc-obj-y += c-format.c
+cc-obj-y += c-semantics.c
+cc-obj-y += c-ppoutput.c
+cc-obj-y += c-cppbuiltin.c
+cc-obj-y += c-objc-common.c
+cc-obj-y += c-dump.c
+cc-obj-y += c-pch.c
+cc-obj-y += c-parser.c
+cc-obj-y += config/i386/i386-c.c
+cc-obj-y += c-gimplify.c
+cc-obj-y += tree-mudflap.c
+cc-obj-y += c-pretty-print.c
+cc-obj-y += c-omp.c
+cc-obj-y += dummy-checksum.c
+cc-obj-y += main.c
+cc-obj-y += tree-browser.c
+cc-obj-y += see.c
+cc-obj-y += rtl-factoring.c
+cc-obj-y += tree-vect-analyze.c
+cc-obj-y += tree-vect-transform.c
+
+CFLAGS_gcc.c += -DSTANDARD_STARTFILE_PREFIX=\"../../..\"
+CFLAGS_gcc.c += -DSTANDARD_EXEC_PREFIX=\"/usr/lib/gcc/\"
+CFLAGS_gcc.c += -DSTANDARD_LIBEXEC_PREFIX=\"/usr/libexec/gcc/\"
+CFLAGS_gcc.c += -DDEFAULT_TARGET_VERSION=\"4.5.0\"
+CFLAGS_gcc.c += -DDEFAULT_TARGET_MACHINE=\"i686-pc-linux-gnu\"
+CFLAGS_gcc.c += -DSTANDARD_BINDIR_PREFIX=\"/usr/local/bin/\"
+CFLAGS_gcc.c += -DTOOLDIR_BASE_PREFIX=\"../../../../\"
+CFLAGS_gcc.c += -Wno-overlength-strings
+
+CFLAGS_intl.c += -DLOCALEDIR=\"/usr/local/share/locale\"
+
+CFLAGS_prefix.c += -DPREFIX=\"/usr\"
+
+CFLAGS_version.c += -DBASEVER="\"4.5.0\""
+CFLAGS_version.c += -DDATESTAMP="\" 20090807\""
+CFLAGS_version.c += -DREVISION="\"\""
+CFLAGS_version.c += -DDEVPHASE="\" (experimental)\""
+CFLAGS_version.c += -DPKGVERSION="\"(GCC) \""
+CFLAGS_version.c += -DBUGURL="\"<http://gittup.org>\""
+
+CFLAGS_toplev.c += -DTARGET_NAME=\"i686-pc-linux-gnu\"
+
+CFLAGS_cppdefault.c += -DPREFIX=\"/usr/\" -DSTANDARD_EXEC_PREFIX=\"/usr/lib/gcc/\"
+
+CFLAGS_c-cppbuiltin.c += -DBASEVER="\"4.5.0\""
+
+CFLAGS += -DIN_GCC
+
+HOSTCC = gcc
+
+gen-y += genautomata.c
+gen-y += rtl.c
+gen-y += read-rtl.c
+gen-y += ggc-none.c
+gen-y += vec.c
+gen-y += gensupport.c
+gen-y += print-rtl.c
+gen-y += genattr.c
+gen-y += genattrtab.c
+gen-y += genemit.c
+gen-y += genextract.c
+gen-y += genopinit.c
+gen-y += genoutput.c
+gen-y += genpeep.c
+gen-y += genpreds.c
+gen-y += genrecog.c
+gen-y += gengenrtl.c
+gen-y += gengtype.c
+gen-y += gengtype-lex.c
+gen-y += gengtype-parse.c
+gen-y += genconstants.c
+gen-y += genconditions.c
+gen-y += min-insn-modes.c
+gen-y += genflags.c
+gen-y += gencheck.c
+gen-y += genconfig.c
+gen-y += gencodes.c
+
+: |> rm -f %o; gawk -f opt-gather.awk c.opt common.opt config/i386/i386.opt config/linux.opt > %o |> optionlist
+: optionlist |> rm -f %o; gawk -f opt-functions.awk -f opth-gen.awk < %f > %o |> options.h
+: optionlist |> rm -f %o; gawk -f opt-functions.awk -f optc-gen.awk -v header_name="config.h system.h coretypes.h tm.h" < %f > %o |> options.c
+
+generated_headers += options.h
+
+!gen-cc = | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -c %f -o %o -I. -I../include -I../libcpp/include $(CFLAGS) -DGENERATOR_FILE |>
+!gen-ld = |> ^ LD %o^ $(HOSTCC) %f -o %o |>
+: foreach genmodes.c errors.c |> !gen-cc |> %B-gen.o
+
+: genmodes-gen.o errors-gen.o $(BINUTILS_ROOT)/libiberty/libiberty.a |> !gen-ld |> genmodes
+: genmodes |> rm -f %o; ./%f -m > %o |> min-insn-modes.c
+: genmodes |> rm -f %o; ./%f > %o |> insn-modes.c
+: genmodes |> rm -f %o; ./%f -h > %o |> insn-modes.h
+generated_headers += insn-modes.h
+
+: foreach $(gen-y) |> !gen-cc |> %B-gen.o
+
+gensupport = rtl-gen.o read-rtl-gen.o ggc-none-gen.o vec-gen.o min-insn-modes-gen.o gensupport-gen.o print-rtl-gen.o errors-gen.o $(BINUTILS_ROOT)/libiberty/libiberty.a
+
+: genconditions-gen.o $(gensupport) |> !gen-ld |> genconditions
+: genconditions |> rm -f %o; ./%f config/i386/i386.md > %o |> gencondmd.c
+
+: genpreds-gen.o $(gensupport) |> !gen-ld |> genpreds
+: genpreds |> rm -f %o; ./%f config/i386/i386.md > %o |> insn-preds.c
+: genpreds |> rm -f %o; ./%f -h config/i386/i386.md > %o |> tm-preds.h
+: genpreds |> rm -f %o; ./%f -c config/i386/i386.md > %o |> tm-constrs.h
+generated_headers += tm-preds.h tm-constrs.h
+
+: gencheck-gen.o $(BINUTILS_ROOT)/libiberty/libiberty.a |> !gen-ld |> gencheck
+: gencheck |> rm -f %o; ./%f > %o |> tree-check.h
+generated_headers += tree-check.h
+
+: genconstants-gen.o $(gensupport) |> !gen-ld |> genconstants
+: genconstants |> rm -f %o; ./%f config/i386/i386.md > %o |> insn-constants.h
+generated_headers += insn-constants.h
+
+gen2-y += gencondmd.c
+: foreach $(gen2-y) |> !gen-cc |> %B-gen.o
+
+: gencondmd-gen.o $(BINUTILS_ROOT)/libiberty/libiberty.a |> !gen-ld |> gencondmd
+: gencondmd |> rm -f %o; ./%f > %o |> insn-conditions.md
+
+: genautomata-gen.o $(gensupport) |> ^ LD %o^ $(HOSTCC) %f -o %o -lm |> genautomata
+: genautomata | insn-conditions.md |> rm -f %o; ./%f config/i386/i386.md insn-conditions.md > %o |> insn-automata.c
+
+: genattrtab-gen.o $(gensupport) |> !gen-ld |> genattrtab
+: genattrtab | insn-conditions.md |> rm -f %o; ./%f config/i386/i386.md insn-conditions.md > %o |> insn-attrtab.c
+
+: genattr-gen.o $(gensupport) |> !gen-ld |> genattr
+: genattr | insn-conditions.md |> rm -f %o; ./%f config/i386/i386.md insn-conditions.md > %o |> insn-attr.h
+generated_headers += insn-attr.h
+
+: genemit-gen.o $(gensupport) |> !gen-ld |> genemit
+: genemit | insn-conditions.md |> rm -f %o; ./%f config/i386/i386.md insn-conditions.md > %o |> insn-emit.c
+
+: genextract-gen.o $(gensupport) |> !gen-ld |> genextract
+: genextract | insn-conditions.md |> rm -f %o; ./%f config/i386/i386.md insn-conditions.md > %o |> insn-extract.c
+
+: genopinit-gen.o $(gensupport) |> !gen-ld |> genopinit
+: genopinit | insn-conditions.md |> rm -f %o; ./%f config/i386/i386.md insn-conditions.md > %o |> insn-opinit.c
+
+: genoutput-gen.o $(gensupport) |> !gen-ld |> genoutput
+: genoutput | insn-conditions.md |> rm -f %o; ./%f config/i386/i386.md insn-conditions.md > %o |> insn-output.c
+
+: genpeep-gen.o $(gensupport) |> !gen-ld |> genpeep
+: genpeep | insn-conditions.md |> rm -f %o; ./%f config/i386/i386.md insn-conditions.md > %o |> insn-peep.c
+
+: genrecog-gen.o $(gensupport) |> !gen-ld |> genrecog
+: genrecog | insn-conditions.md |> rm -f %o; ./%f config/i386/i386.md insn-conditions.md > %o |> insn-recog.c
+
+: gengenrtl-gen.o $(gensupport) |> !gen-ld |> gengenrtl
+: gengenrtl |> rm -f %o; ./%f > %o |> genrtl.c
+: gengenrtl |> rm -f %o; ./%f -h > %o |> genrtl.h
+generated_headers += genrtl.h
+
+: genflags-gen.o $(gensupport) |> !gen-ld |> genflags
+: genflags | insn-conditions.md |> rm -f %o; ./%f config/i386/i386.md insn-conditions.md > %o |> insn-flags.h
+generated_headers += insn-flags.h
+
+: genconfig-gen.o $(gensupport) |> !gen-ld |> genconfig
+: genconfig | insn-conditions.md |> rm -f %o; ./%f config/i386/i386.md insn-conditions.md > %o |> insn-config.h
+generated_headers += insn-config.h
+
+: gencodes-gen.o $(gensupport) |> !gen-ld |> gencodes
+: gencodes | insn-conditions.md |> rm -f %o; ./%f config/i386/i386.md insn-conditions.md > %o |> insn-codes.h
+generated_headers += insn-codes.h
+
+gtype_headers = gtype-c.h gt-c-parser.h gt-c-pragma.h gt-c-common.h gt-c-decl.h gt-tree-scalar-evolution.h gt-varasm.h gt-tree.h gt-stringpool.h gt-optabs.h gt-function.h gt-except.h gt-dwarf2out.h gt-dbxout.h gt-alias.h gt-integrate.h gt-i386.h gt-tree-ssa-structalias.h gt-ipa-reference.h gt-tree-phinodes.h gt-tree-ssa-propagate.h gt-cgraphunit.h gt-passes.h gt-targhooks.h gt-omp-low.h gt-tree-parloops.h gt-varpool.h gt-tree-nested.h gt-tree-profile.h gt-gimplify.h gt-tree-iterator.h gt-tree-ssa-address.h gt-tree-mudflap.h gt-gimple.h gt-stor-layout.h gt-sdbout.h gt-cfglayout.h gt-reginfo.h gt-lists.h gt-gcse.h gt-expr.h gt-explow.h gt-emit-rtl.h gt-dojump.h gt-tree-vect-generic.h gt-dwarf2asm.h gt-ipa-inline.h gt-cgraph.h gt-cselib.h gt-bitmap.h gt-caller-save.h gt-coverage.h
+: gengtype-gen.o gengtype-lex-gen.o gengtype-parse-gen.o errors-gen.o $(BINUTILS_ROOT)/libiberty/libiberty.a |> !gen-ld |> gengtype
+: gengtype | options.h |> rm -f %o; ./%f . gtyp-input.list |> gtype-desc.c $(gtype_headers)
+generated_headers += $(gtype_headers)
+
+: options.c | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -I. -I../include $(CFLAGS) -DGCC_DRIVER -c %f -o %o |> gcc-options.o {objs}
+: foreach $(obj-y) | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -I. -I../include $(CFLAGS) $(CFLAGS_%f) -c %f -o %o |> %B.o {objs}
+: {objs} ../libcpp/libcpp.a ../../binutils/libiberty/libiberty.a ../libdecnumber/libdecnumber.a |> ^ LD %o^ $(HOSTCC) %f -o %o |> xgcc
+
+: foreach $(backend-obj-y) | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -I. -I../include -I../libcpp/include -I../libdecnumber -I../libdecnumber/bid $(CFLAGS) $(CFLAGS_%f) -Wno-variadic-macros -c %f -o %o |> %B.o {backend-objs}
+: {backend-objs} intl.o opts-common.o version.o prefix.o |> ^ AR %o^ rm -f %o; ar rcs %o %f |> libbackend.a
+
+: foreach $(cc-obj-y) | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -I. -I../include -I../libcpp/include -I../libdecnumber -I../libdecnumber/bid $(CFLAGS) $(CFLAGS_%f) -Wno-variadic-macros -c %f -o %o |> %B.o {cc-objs}
+: {cc-objs} libbackend.a ../libcpp/libcpp.a ../libdecnumber/libdecnumber.a ../../binutils/libiberty/libiberty.a |> ^ LD %o^ $(HOSTCC) %f -o %o -lmpfr -lgmp -rdynamic -ldl |> cc1
+
+: foreach crtstuff.c | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -c %f -o %o -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -finhibit-size-directive -fno-inline -fno-exceptions -fno-zero-initialized-in-bss -fno-toplevel-reorder -fno-tree-vectorize -DENABLE_DECIMAL_BID_FORMAT -DCRT_BEGIN -DCRTSTUFFS_O -I../include -I. |> crtbegin.o
+: foreach crtstuff.c | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -c %f -o %o -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -finhibit-size-directive -fno-inline -fno-exceptions -fno-zero-initialized-in-bss -fno-toplevel-reorder -fno-tree-vectorize -DENABLE_DECIMAL_BID_FORMAT -DCRT_END -I../include -I. |> crtend.o
+: foreach crtstuff.c | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -fPIC -c %f -o %o -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -finhibit-size-directive -fno-inline -fno-exceptions -fno-zero-initialized-in-bss -fno-toplevel-reorder -fno-tree-vectorize -DENABLE_DECIMAL_BID_FORMAT -DCRT_BEGIN -DCRTSTUFFS_O -I../include -I.  |> crtbeginS.o
+: foreach crtstuff.c | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -fPIC -c %f -o %o -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -finhibit-size-directive -fno-inline -fno-exceptions -fno-zero-initialized-in-bss -fno-toplevel-reorder -fno-tree-vectorize -DENABLE_DECIMAL_BID_FORMAT -DCRT_END -DCRTSTUFFS_O -I../include -I.  |> crtendS.o
+
+stupid-libgcc-y += _muldi3.c
+stupid-libgcc-y += _negdi2.c
+stupid-libgcc-y += _lshrdi3.c
+stupid-libgcc-y += _ashldi3.c
+stupid-libgcc-y += _ashrdi3.c
+stupid-libgcc-y += _cmpdi2.c
+stupid-libgcc-y += _ucmpdi2.c
+stupid-libgcc-y += _clear_cache.c
+stupid-libgcc-y += _enable_execute_stack.c
+stupid-libgcc-y += _trampoline.c
+stupid-libgcc-y += __main.c
+stupid-libgcc-y += _absvsi2.c
+stupid-libgcc-y += _absvdi2.c
+stupid-libgcc-y += _addvsi3.c
+stupid-libgcc-y += _addvdi3.c
+stupid-libgcc-y += _subvsi3.c
+stupid-libgcc-y += _subvdi3.c
+stupid-libgcc-y += _mulvsi3.c
+stupid-libgcc-y += _mulvdi3.c
+stupid-libgcc-y += _negvsi2.c
+stupid-libgcc-y += _negvdi2.c
+stupid-libgcc-y += _ctors.c
+stupid-libgcc-y += _ffssi2.c
+stupid-libgcc-y += _ffsdi2.c
+stupid-libgcc-y += _clz.c
+stupid-libgcc-y += _clzsi2.c
+stupid-libgcc-y += _clzdi2.c
+stupid-libgcc-y += _ctzsi2.c
+stupid-libgcc-y += _ctzdi2.c
+stupid-libgcc-y += _popcount_tab.c
+stupid-libgcc-y += _popcountsi2.c
+stupid-libgcc-y += _popcountdi2.c
+stupid-libgcc-y += _paritysi2.c
+stupid-libgcc-y += _paritydi2.c
+stupid-libgcc-y += _powisf2.c
+stupid-libgcc-y += _powidf2.c
+stupid-libgcc-y += _powixf2.c
+stupid-libgcc-y += _powitf2.c
+stupid-libgcc-y += _mulsc3.c
+stupid-libgcc-y += _muldc3.c
+stupid-libgcc-y += _mulxc3.c
+stupid-libgcc-y += _multc3.c
+stupid-libgcc-y += _divsc3.c
+stupid-libgcc-y += _divdc3.c
+stupid-libgcc-y += _divxc3.c
+stupid-libgcc-y += _divtc3.c
+stupid-libgcc-y += _bswapsi2.c
+stupid-libgcc-y += _bswapdi2.c
+stupid-libgcc-y += _fixunssfsi.c
+stupid-libgcc-y += _fixunsdfsi.c
+stupid-libgcc-y += _fixunsxfsi.c
+stupid-libgcc-y += _fixsfdi.c
+stupid-libgcc-y += _fixdfdi.c
+stupid-libgcc-y += _fixxfdi.c
+stupid-libgcc-y += _fixunssfdi.c
+stupid-libgcc-y += _fixunsdfdi.c
+stupid-libgcc-y += _fixunsxfdi.c
+stupid-libgcc-y += _floatdisf.c
+stupid-libgcc-y += _floatdidf.c
+stupid-libgcc-y += _floatdixf.c
+stupid-libgcc-y += _floatundisf.c
+stupid-libgcc-y += _floatundidf.c
+stupid-libgcc-y += _floatundixf.c
+stupid-libgcc-y += _eprintf.c
+stupid-libgcc-y += __gcc_bcmp.c
+stupid-libgcc-y += _divdi3.c
+stupid-libgcc-y += _moddi3.c
+stupid-libgcc-y += _udivdi3.c
+stupid-libgcc-y += _umoddi3.c
+stupid-libgcc-y += _udiv_w_sdiv.c
+stupid-libgcc-y += _udivmoddi4.c
+
+libgcc-y += ../libgcc/config/libbid/bid_decimal_globals.c
+libgcc-y += ../libgcc/config/libbid/bid_decimal_data.c
+libgcc-y += ../libgcc/config/libbid/bid_binarydecimal.c
+libgcc-y += ../libgcc/config/libbid/bid_convert_data.c
+libgcc-y += ../libgcc/config/libbid/_isinfd32.c
+libgcc-y += ../libgcc/config/libbid/_isinfd64.c
+libgcc-y += ../libgcc/config/libbid/_isinfd128.c
+libgcc-y += ../libgcc/config/libbid/bid64_noncomp.c
+libgcc-y += ../libgcc/config/libbid/bid128_noncomp.c
+libgcc-y += ../libgcc/config/libbid/bid128_fma.c
+libgcc-y += ../libgcc/config/libbid/bid_round.c
+libgcc-y += ../libgcc/config/libbid/bid_from_int.c
+libgcc-y += ../libgcc/config/libbid/bid64_add.c
+libgcc-y += ../libgcc/config/libbid/bid128_add.c
+libgcc-y += ../libgcc/config/libbid/bid64_div.c
+libgcc-y += ../libgcc/config/libbid/bid128_div.c
+libgcc-y += ../libgcc/config/libbid/bid64_mul.c
+libgcc-y += ../libgcc/config/libbid/bid128_mul.c
+libgcc-y += ../libgcc/config/libbid/bid64_compare.c
+libgcc-y += ../libgcc/config/libbid/bid128_compare.c
+libgcc-y += ../libgcc/config/libbid/bid128.c
+libgcc-y += ../libgcc/config/libbid/bid32_to_bid64.c
+libgcc-y += ../libgcc/config/libbid/bid32_to_bid128.c
+libgcc-y += ../libgcc/config/libbid/bid64_to_bid128.c
+libgcc-y += ../libgcc/config/libbid/bid64_to_int32.c
+libgcc-y += ../libgcc/config/libbid/bid64_to_int64.c
+libgcc-y += ../libgcc/config/libbid/bid64_to_uint32.c
+libgcc-y += ../libgcc/config/libbid/bid64_to_uint64.c
+libgcc-y += ../libgcc/config/libbid/bid128_to_int32.c
+libgcc-y += ../libgcc/config/libbid/bid128_to_int64.c
+libgcc-y += ../libgcc/config/libbid/bid128_to_uint32.c
+libgcc-y += ../libgcc/config/libbid/bid128_to_uint64.c
+libgcc-y += ../libgcc/config/libbid/_addsub_sd.c
+libgcc-y += ../libgcc/config/libbid/_div_sd.c
+libgcc-y += ../libgcc/config/libbid/_mul_sd.c
+libgcc-y += ../libgcc/config/libbid/_eq_sd.c
+libgcc-y += ../libgcc/config/libbid/_ne_sd.c
+libgcc-y += ../libgcc/config/libbid/_lt_sd.c
+libgcc-y += ../libgcc/config/libbid/_gt_sd.c
+libgcc-y += ../libgcc/config/libbid/_le_sd.c
+libgcc-y += ../libgcc/config/libbid/_ge_sd.c
+libgcc-y += ../libgcc/config/libbid/_sd_to_si.c
+libgcc-y += ../libgcc/config/libbid/_sd_to_di.c
+libgcc-y += ../libgcc/config/libbid/_sd_to_usi.c
+libgcc-y += ../libgcc/config/libbid/_sd_to_udi.c
+libgcc-y += ../libgcc/config/libbid/_si_to_sd.c
+libgcc-y += ../libgcc/config/libbid/_di_to_sd.c
+libgcc-y += ../libgcc/config/libbid/_usi_to_sd.c
+libgcc-y += ../libgcc/config/libbid/_udi_to_sd.c
+libgcc-y += ../libgcc/config/libbid/_sd_to_sf.c
+libgcc-y += ../libgcc/config/libbid/_sd_to_df.c
+libgcc-y += ../libgcc/config/libbid/_sd_to_xf.c
+libgcc-y += ../libgcc/config/libbid/_sd_to_tf.c
+libgcc-y += ../libgcc/config/libbid/_sf_to_sd.c
+libgcc-y += ../libgcc/config/libbid/_df_to_sd.c
+libgcc-y += ../libgcc/config/libbid/_xf_to_sd.c
+libgcc-y += ../libgcc/config/libbid/_tf_to_sd.c
+libgcc-y += ../libgcc/config/libbid/_sd_to_dd.c
+libgcc-y += ../libgcc/config/libbid/_sd_to_td.c
+libgcc-y += ../libgcc/config/libbid/_unord_sd.c
+libgcc-y += ../libgcc/config/libbid/_addsub_dd.c
+libgcc-y += ../libgcc/config/libbid/_div_dd.c
+libgcc-y += ../libgcc/config/libbid/_mul_dd.c
+libgcc-y += ../libgcc/config/libbid/_eq_dd.c
+libgcc-y += ../libgcc/config/libbid/_ne_dd.c
+libgcc-y += ../libgcc/config/libbid/_lt_dd.c
+libgcc-y += ../libgcc/config/libbid/_gt_dd.c
+libgcc-y += ../libgcc/config/libbid/_le_dd.c
+libgcc-y += ../libgcc/config/libbid/_ge_dd.c
+libgcc-y += ../libgcc/config/libbid/_dd_to_si.c
+libgcc-y += ../libgcc/config/libbid/_dd_to_di.c
+libgcc-y += ../libgcc/config/libbid/_dd_to_usi.c
+libgcc-y += ../libgcc/config/libbid/_dd_to_udi.c
+libgcc-y += ../libgcc/config/libbid/_si_to_dd.c
+libgcc-y += ../libgcc/config/libbid/_di_to_dd.c
+libgcc-y += ../libgcc/config/libbid/_usi_to_dd.c
+libgcc-y += ../libgcc/config/libbid/_udi_to_dd.c
+libgcc-y += ../libgcc/config/libbid/_dd_to_sf.c
+libgcc-y += ../libgcc/config/libbid/_dd_to_df.c
+libgcc-y += ../libgcc/config/libbid/_dd_to_xf.c
+libgcc-y += ../libgcc/config/libbid/_dd_to_tf.c
+libgcc-y += ../libgcc/config/libbid/_sf_to_dd.c
+libgcc-y += ../libgcc/config/libbid/_df_to_dd.c
+libgcc-y += ../libgcc/config/libbid/_xf_to_dd.c
+libgcc-y += ../libgcc/config/libbid/_tf_to_dd.c
+libgcc-y += ../libgcc/config/libbid/_dd_to_sd.c
+libgcc-y += ../libgcc/config/libbid/_dd_to_td.c
+libgcc-y += ../libgcc/config/libbid/_unord_dd.c
+libgcc-y += ../libgcc/config/libbid/_addsub_td.c
+libgcc-y += ../libgcc/config/libbid/_div_td.c
+libgcc-y += ../libgcc/config/libbid/_mul_td.c
+libgcc-y += ../libgcc/config/libbid/_eq_td.c
+libgcc-y += ../libgcc/config/libbid/_ne_td.c
+libgcc-y += ../libgcc/config/libbid/_lt_td.c
+libgcc-y += ../libgcc/config/libbid/_gt_td.c
+libgcc-y += ../libgcc/config/libbid/_le_td.c
+libgcc-y += ../libgcc/config/libbid/_ge_td.c
+libgcc-y += ../libgcc/config/libbid/_td_to_si.c
+libgcc-y += ../libgcc/config/libbid/_td_to_di.c
+libgcc-y += ../libgcc/config/libbid/_td_to_usi.c
+libgcc-y += ../libgcc/config/libbid/_td_to_udi.c
+libgcc-y += ../libgcc/config/libbid/_si_to_td.c
+libgcc-y += ../libgcc/config/libbid/_di_to_td.c
+libgcc-y += ../libgcc/config/libbid/_usi_to_td.c
+libgcc-y += ../libgcc/config/libbid/_udi_to_td.c
+libgcc-y += ../libgcc/config/libbid/_td_to_sf.c
+libgcc-y += ../libgcc/config/libbid/_td_to_df.c
+libgcc-y += ../libgcc/config/libbid/_td_to_xf.c
+libgcc-y += ../libgcc/config/libbid/_td_to_tf.c
+libgcc-y += ../libgcc/config/libbid/_sf_to_td.c
+libgcc-y += ../libgcc/config/libbid/_df_to_td.c
+libgcc-y += ../libgcc/config/libbid/_xf_to_td.c
+libgcc-y += ../libgcc/config/libbid/_tf_to_td.c
+libgcc-y += ../libgcc/config/libbid/_td_to_sd.c
+libgcc-y += ../libgcc/config/libbid/_td_to_dd.c
+libgcc-y += ../libgcc/config/libbid/_unord_td.c
+
+libgcc-y += config/soft-fp/addtf3.c
+libgcc-y += config/soft-fp/divtf3.c
+libgcc-y += config/soft-fp/eqtf2.c
+libgcc-y += config/soft-fp/getf2.c
+libgcc-y += config/soft-fp/letf2.c
+libgcc-y += config/soft-fp/multf3.c
+libgcc-y += config/soft-fp/negtf2.c
+libgcc-y += config/soft-fp/subtf3.c
+libgcc-y += config/soft-fp/unordtf2.c
+libgcc-y += config/soft-fp/fixtfsi.c
+libgcc-y += config/soft-fp/fixunstfsi.c
+libgcc-y += config/soft-fp/floatsitf.c
+libgcc-y += config/soft-fp/floatunsitf.c
+libgcc-y += config/soft-fp/fixtfdi.c
+libgcc-y += config/soft-fp/fixunstfdi.c
+libgcc-y += config/soft-fp/floatditf.c
+libgcc-y += config/soft-fp/floatunditf.c
+libgcc-y += config/soft-fp/extendsftf2.c
+libgcc-y += config/soft-fp/extenddftf2.c
+libgcc-y += config/soft-fp/extendxftf2.c
+libgcc-y += config/soft-fp/trunctfsf2.c
+libgcc-y += config/soft-fp/trunctfdf2.c
+libgcc-y += config/soft-fp/trunctfxf2.c
+
+libgcc-y += ../libgcc/config/i386/32/tf-signs.c
+
+compiler_proper = cc1 xgcc $(BINUTILS_ROOT)/gas/as
+cc_proper = ./xgcc -B. -B$(BINUTILS_ROOT)/ld -B$(BINUTILS_ROOT)/gas -nostdinc -I./ginclude -isystem ../include-fixed -isystem $(UCLIBC_ROOT)/include/ -isystem $(UCLIBC_ROOT)/libpthread/linuxthreads.old/sysdeps/i386 -ftup-uclibc
+
+: foreach $(stupid-libgcc-y) | $(compiler_proper) $(generated_headers) |> ^ CC %f^ $(cc_proper) -O2 -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition  -isystem ./include -fPIC -DHAVE_GTHR_DEFAULT -DIN_LIBGCC2 -D__GCC_FLOAT_NOT_NEEDED -DENABLE_DECIMAL_BID_FORMAT -DHAVE_CC_TLS -DUSE_TLS -fvisibility=hidden -DHIDE_EXPORTS -I. -I../include -I../libgcc -I$(LINUX_ROOT)/include -I$(LINUX_ROOT)/arch/x86/include -DL%B -include $(UCLIBC_ROOT)/include/libc-symbols.h -c %f -o %o |> %B.o {libgcc-objs}
+: foreach $(libgcc-y) | $(compiler_proper) $(generated_headers) |> ^ CC %f^ $(cc_proper) -O2 -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition  -isystem ./include -fPIC -DHAVE_GTHR_DEFAULT -DIN_LIBGCC2 -D__GCC_FLOAT_NOT_NEEDED -DENABLE_DECIMAL_BID_FORMAT -DHAVE_CC_TLS -DUSE_TLS -Wno-missing-prototypes -Wno-type-limits -fvisibility=hidden -DHIDE_EXPORTS -I. -I../include -I../libgcc -c %f -o %B.o |> %B.o {libgcc-objs}
+: {libgcc-objs} |> ^ AR %o^ rm -f %o; ar crs %o %f |> libgcc.a
