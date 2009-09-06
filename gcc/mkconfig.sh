@@ -104,7 +104,3 @@ if [ -f $output ] && cmp ${output}T $output >/dev/null 2>&1; then
 else
     mv -f ${output}T $output
 fi
-
-# Touch a stamp file for Make's benefit.
-rm -f cs-$output
-echo timestamp > cs-$output
