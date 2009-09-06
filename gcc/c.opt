@@ -554,6 +554,18 @@ fdollars-in-identifiers
 C ObjC C++ ObjC++
 Permit '$' as an identifier character
 
+ftup-linux
+C
+Use linux-kernel style CONFIG_ tup variables
+
+ftup-uclibc
+C
+Use uClibc style __UCLIBC__ tup variables
+
+ftup-busybox
+C
+Use busybox style ENABLE_, IF_, and IF_NOT_ tup variables
+
 felide-constructors
 C++ ObjC++
 

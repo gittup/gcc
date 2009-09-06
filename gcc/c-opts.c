@@ -219,6 +219,9 @@ c_common_init_options (unsigned int argc, const char **argv)
 
   cpp_opts = cpp_get_options (parse_in);
   cpp_opts->dollars_in_ident = DOLLARS_IN_IDENTIFIERS;
+  cpp_opts->tup_linux = 0;
+  cpp_opts->tup_uclibc = 0;
+  cpp_opts->tup_busybox = 0;
   cpp_opts->objc = c_dialect_objc ();
 
   /* Reset to avoid warnings on internal definitions.  We set it just
@@ -607,6 +610,18 @@ c_common_handle_option (size_t scode, const char *arg, int value)
 
     case OPT_fdollars_in_identifiers:
       cpp_opts->dollars_in_ident = value;
+      break;
+
+    case OPT_ftup_linux:
+      cpp_opts->tup_linux = value;
+      break;
+
+    case OPT_ftup_uclibc:
+      cpp_opts->tup_uclibc = value;
+      break;
+
+    case OPT_ftup_busybox:
+      cpp_opts->tup_busybox = value;
       break;
 
     case OPT_ffreestanding:

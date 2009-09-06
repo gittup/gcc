@@ -363,6 +363,15 @@ struct cpp_options
   /* Zero means dollar signs are punctuation.  */
   unsigned char dollars_in_ident;
 
+  /* Linux kernel style CONFIG_ tup variables */
+  unsigned char tup_linux;
+
+  /* uClibc style __UCLIBC__ tup variables */
+  unsigned char tup_uclibc;
+
+  /* busybox style ENABLE_, IF_, and IF_NOT_ tup variables */
+  unsigned char tup_busybox;
+
   /* Nonzero means UCNs are accepted in identifiers.  */
   unsigned char extended_identifiers;
 
@@ -567,6 +576,7 @@ extern const char *progname;
 #define NODE_MACRO_ARG	(1 << 6)	/* Used during #define processing.  */
 #define NODE_USED	(1 << 7)	/* Dumped with -dU.  */
 #define NODE_CONDITIONAL (1 << 8)	/* Conditional macro */
+#define NODE_TUP 	(1 << 9)	/* Node checked with tup */
 
 /* Different flavors of hash node.  */
 enum node_type
@@ -639,7 +649,7 @@ struct cpp_hashnode GTY(())
 					   Otherwise, a NODE_OPERATOR.  */
   unsigned char rid_code;		/* Rid code - for front ends.  */
   ENUM_BITFIELD(node_type) type : 7;	/* CPP node type.  */
-  unsigned int flags : 9;		/* CPP flags.  */
+  unsigned int flags : 10;		/* CPP flags.  */
 
   union _cpp_hashnode_value GTY ((desc ("CPP_HASHNODE_VALUE_IDX (%1)"))) value;
 };
