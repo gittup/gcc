@@ -167,10 +167,7 @@ struct file_hash_entry_pool
 };
 
 static bool open_file (_cpp_file *file);
-static bool pch_open_file (cpp_reader *pfile, _cpp_file *file,
-			   bool *invalid_pch);
-static bool find_file_in_dir (cpp_reader *pfile, _cpp_file *file,
-			      bool *invalid_pch);
+static bool find_file_in_dir (cpp_reader *pfile, _cpp_file *file);
 static bool read_file_guts (cpp_reader *pfile, _cpp_file *file);
 static bool read_file (cpp_reader *pfile, _cpp_file *file);
 static bool should_stack_file (cpp_reader *, _cpp_file *file, bool import);
@@ -192,7 +189,6 @@ static char *read_filename_string (int ch, FILE *f);
 static void read_name_map (cpp_dir *dir);
 static char *remap_filename (cpp_reader *pfile, _cpp_file *file);
 static char *append_file_to_dir (const char *fname, cpp_dir *dir);
-static bool validate_pch (cpp_reader *, _cpp_file *file, const char *pchname);
 static int pchf_save_compare (const void *e1, const void *e2);
 static int pchf_compare (const void *d_p, const void *e_p);
 static bool check_file_against_entries (cpp_reader *, _cpp_file *, bool);
@@ -269,79 +265,13 @@ open_file (_cpp_file *file)
   return false;
 }
 
-/* Temporary PCH intercept of opening a file.  Try to find a PCH file
-   based on FILE->name and FILE->dir, and test those found for
-   validity using PFILE->cb.valid_pch.  Return true iff a valid file is
-   found.  Set *INVALID_PCH if a PCH file is found but wasn't valid.  */
-
-static bool
-pch_open_file (cpp_reader *pfile, _cpp_file *file, bool *invalid_pch)
-{
-  static const char extension[] = ".gch";
-  const char *path = file->path;
-  size_t len, flen;
-  char *pchname;
-  struct stat st;
-  bool valid = false;
-
-  /* No PCH on <stdin> or if not requested.  */
-  if (file->name[0] == '\0' || !pfile->cb.valid_pch)
-    return false;
-
-  flen = strlen (path);
-  len = flen + sizeof (extension);
-  pchname = XNEWVEC (char, len);
-  memcpy (pchname, path, flen);
-  memcpy (pchname + flen, extension, sizeof (extension));
-
-  if (stat (pchname, &st) == 0)
-    {
-      DIR *pchdir;
-      struct dirent *d;
-      size_t dlen, plen = len;
-
-      if (!S_ISDIR (st.st_mode))
-	valid = validate_pch (pfile, file, pchname);
-      else if ((pchdir = opendir (pchname)) != NULL)
-	{
-	  pchname[plen - 1] = '/';
-	  while ((d = readdir (pchdir)) != NULL)
-	    {
-	      dlen = strlen (d->d_name) + 1;
-	      if ((strcmp (d->d_name, ".") == 0)
-		  || (strcmp (d->d_name, "..") == 0))
-		continue;
-	      if (dlen + plen > len)
-		{
-		  len += dlen + 64;
-		  pchname = XRESIZEVEC (char, pchname, len);
-		}
-	      memcpy (pchname + plen, d->d_name, dlen);
-	      valid = validate_pch (pfile, file, pchname);
-	      if (valid)
-		break;
-	    }
-	  closedir (pchdir);
-	}
-      if (!valid)
-	*invalid_pch = true;
-    }
-
-  if (valid)
-    file->pchname = pchname;
-  else
-    free (pchname);
-
-  return valid;
-}
-
 /* Try to open the path FILE->name appended to FILE->dir.  This is
    where remap and PCH intercept the file lookup process.  Return true
    if the file was found, whether or not the open was successful.
    Set *INVALID_PCH to true if a PCH file is found but wasn't valid.  */
 
 static bool
-find_file_in_dir (cpp_reader *pfile, _cpp_file *file, bool *invalid_pch)
+find_file_in_dir (cpp_reader *pfile, _cpp_file *file)
 {
   char *path;
 
@@ -366,8 +296,6 @@ find_file_in_dir (cpp_reader *pfile, _cpp_file *file, bool *invalid_pch)
 	}
 
       file->path = path;
-      if (pch_open_file (pfile, file, invalid_pch))
-	return true;
 
       if (open_file (file))
 	return true;
@@ -447,7 +375,6 @@ _cpp_find_file (cpp_reader *pfile, const char *fname, cpp_dir *start_dir, bool f
 {
   struct file_hash_entry *entry, **hash_slot;
   _cpp_file *file;
-  bool invalid_pch = false;
   bool saw_bracket_include = false;
   bool saw_quote_include = false;
   struct cpp_dir *found_in_cache = NULL;
@@ -471,7 +398,7 @@ _cpp_find_file (cpp_reader *pfile, const char *fname, cpp_dir *start_dir, bool f
   /* Try each path in the include chain.  */
   for (; !fake ;)
     {
-      if (find_file_in_dir (pfile, file, &invalid_pch))
+      if (find_file_in_dir (pfile, file))
 	break;
 
       file->dir = file->dir->next;
@@ -489,14 +416,6 @@ _cpp_find_file (cpp_reader *pfile, const char *fname, cpp_dir *start_dir, bool f
 	    }
 
 	  open_file_failed (pfile, file, angle_brackets);
-	  if (invalid_pch)
-	    {
-	      cpp_error (pfile, CPP_DL_ERROR,
-	       "one or more PCH files were found, but they were invalid");
-	      if (!cpp_get_options (pfile)->warn_invalid_pch)
-		cpp_error (pfile, CPP_DL_ERROR,
-			   "use -Winvalid-pch for more information");
-	    }
 	  break;
 	}
 
@@ -1527,38 +1446,6 @@ remap_filename (cpp_reader *pfile, _cpp_file *file)
       dir = make_cpp_dir (pfile, new_dir, dir->sysp);
       fname = p + 1;
     }
-}
-
-/* Returns true if PCHNAME is a valid PCH file for FILE.  */
-static bool
-validate_pch (cpp_reader *pfile, _cpp_file *file, const char *pchname)
-{
-  const char *saved_path = file->path;
-  bool valid = false;
-
-  file->path = pchname;
-  if (open_file (file))
-    {
-      valid = 1 & pfile->cb.valid_pch (pfile, pchname, file->fd);
-
-      if (!valid)
-	{
-	  close (file->fd);
-	  file->fd = -1;
-	}
-
-      if (CPP_OPTION (pfile, print_include_names))
-	{
-	  unsigned int i;
-	  for (i = 1; i < pfile->line_table->depth; i++)
-	    putc ('.', stderr);
-	  fprintf (stderr, "%c %s\n",
-		   valid ? '!' : 'x', pchname);
-	}
-    }
-
-  file->path = saved_path;
-  return valid;
 }
 
 /* Get the path associated with the _cpp_file F.  The path includes
