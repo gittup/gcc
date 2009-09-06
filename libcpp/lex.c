@@ -24,6 +24,7 @@ along with this program; see the file COPYING3.  If not see
 #include "system.h"
 #include "cpplib.h"
 #include "internal.h"
+#include "tupvar.h"
 
 enum spell_type
 {
@@ -1123,6 +1124,36 @@ _cpp_lex_direct (cpp_reader *pfile)
 	result->val.node = lex_identifier (pfile, buffer->cur - 1, false,
 					   &nst);
 	warn_about_normalization (pfile, result, &nst);
+      }
+
+      {
+	      const char *var;
+	      cpp_hashnode *node = result->val.node;
+
+	      if(node->type == NT_VOID && ! (node->flags & NODE_TUP)) {
+		      node->flags |= NODE_TUP;
+		      var = (const char*)cpp_token_as_text(pfile, result);
+		      if(CPP_OPTION(pfile, tup_linux) && strncmp(var, "CONFIG_", 7) == 0) {
+			      /* linux kernel */
+			      tup_set_macro(pfile, var+7, strlen(var+7), node);
+		      } else if(CPP_OPTION(pfile, tup_uclibc) && strncmp(var, "__", 2) == 0) {
+			      /* uclibc */
+			      int len;
+			      len = strlen(var);
+			      if(len > 10 && var[len-1] == '_' && var[len-2] == '_') {
+				      tup_set_macro(pfile, var+2, len-4, node);
+			      }
+		      } else if(CPP_OPTION(pfile, tup_busybox) && strncmp(var, "ENABLE_", 7) == 0) {
+			      /* busybox */
+			      tup_enable_macro(pfile, var+7, strlen(var+7), node);
+		      } else if(CPP_OPTION(pfile, tup_busybox) && strncmp(var, "IF_NOT_", 7) == 0) {
+			      /* busybox */
+			      tup_set_if(pfile, var+7, strlen(var+7), node, 1);
+		      } else if(CPP_OPTION(pfile, tup_busybox) && strncmp(var, "IF_", 3) == 0) {
+			      /* busybox */
+			      tup_set_if(pfile, var+3, strlen(var+3), node, 0);
+		      }
+	      }
       }
 
       /* Convert named operators to their proper types.  */
