@@ -293,8 +293,6 @@ static const char *vardict_search(struct vardict *vars, const char *key,
 		}
 		tup_send_event(vars->entries + vars->offsets[cur],
 			       p - (vars->entries + vars->offsets[cur]));
-		if(strcmp(p+1, "~UNSET~") == 0)
-			return NULL;
 		return p+1;
 out_next:
 		;

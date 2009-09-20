@@ -9,8 +9,6 @@
  * The strings "y" and "n" also have special meaning:
  *     FOO=y becomes 1
  *     FOO=n is left undefined
- *
- * FOO=~UNSET~ is also left undefined
  */
 void tup_set_macro(cpp_reader *pfile, const char *var, int varlen,
 		   cpp_hashnode *node);
