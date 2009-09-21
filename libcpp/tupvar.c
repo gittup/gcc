@@ -254,6 +254,7 @@ static const char *vardict_search(struct vardict *vars, const char *key,
 	const char *k;
 	int bytesleft;
 
+	tup_send_event(key, keylen);
 	while(1) {
 		cur = (right - left) >> 1;
 		if(cur <= 0)
@@ -291,8 +292,6 @@ static const char *vardict_search(struct vardict *vars, const char *key,
 			right = cur;
 			goto out_next;
 		}
-		tup_send_event(vars->entries + vars->offsets[cur],
-			       p - (vars->entries + vars->offsets[cur]));
 		return p+1;
 out_next:
 		;
