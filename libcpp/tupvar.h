@@ -8,10 +8,10 @@
  *
  * The strings "y" and "n" also have special meaning:
  *     FOO=y becomes 1
- *     FOO=n is left undefined
+ *     FOO=n becomes 0, or is left undefined depending on 'n_is_zero'
  */
 void tup_set_macro(cpp_reader *pfile, const char *var, int varlen,
-		   cpp_hashnode *node);
+		   cpp_hashnode *node, int n_is_zero);
 
 /* This is used for busybox-style ENABLE_ macros. They are set to either 1
  * (CPP_NUMBER) or 0 (CPP_NUMBER)

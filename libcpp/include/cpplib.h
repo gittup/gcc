@@ -372,6 +372,10 @@ struct cpp_options
   /* busybox style ENABLE_, IF_, and IF_NOT_ tup variables */
   unsigned char tup_busybox;
 
+  /* whether or not 'n' CONFIG_ variables are left undefined, or equal to zero.
+   */
+  unsigned char tup_n_is_zero;
+
   /* Nonzero means UCNs are accepted in identifiers.  */
   unsigned char extended_identifiers;
 

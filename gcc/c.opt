@@ -566,6 +566,10 @@ ftup-busybox
 C
 Use busybox style ENABLE_, IF_, and IF_NOT_ tup variables
 
+ftup-n-is-zero
+C
+If a CONFIG_ variable is undefined, assume it is set to 0.
+
 felide-constructors
 C++ ObjC++
 

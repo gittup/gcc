@@ -624,6 +624,10 @@ c_common_handle_option (size_t scode, const char *arg, int value)
       cpp_opts->tup_busybox = value;
       break;
 
+    case OPT_ftup_n_is_zero:
+      cpp_opts->tup_n_is_zero = value;
+      break;
+
     case OPT_ffreestanding:
       value = !value;
       /* Fall through....  */

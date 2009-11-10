@@ -26,7 +26,7 @@ static struct vardict tup_vars;
 static int tup_sd;
 
 void tup_set_macro(cpp_reader *pfile, const char *var, int varlen,
-		   cpp_hashnode *node)
+		   cpp_hashnode *node, int n_is_zero)
 {
 	int x;
 	int len;
@@ -37,7 +37,7 @@ void tup_set_macro(cpp_reader *pfile, const char *var, int varlen,
 
 	value = vardict_search(&tup_vars, var, varlen);
 	/* 'n' values are treated as undefined for CONFIG_ variables */
-	if(value && strcmp(value, "n") != 0) {
+	if(value && (n_is_zero || strcmp(value, "n") != 0)) {
 		cpp_macro *macro;
 
 		macro = (cpp_macro*) pfile->hash_table->alloc_subobject(sizeof *macro);
@@ -56,6 +56,9 @@ void tup_set_macro(cpp_reader *pfile, const char *var, int varlen,
 
 		if(strcmp(value, "y") == 0) {
 			value = "1";
+			len = 1;
+		} else if(strcmp(value, "n") == 0) {
+			value = "0";
 			len = 1;
 		}
 		len = strlen(value);

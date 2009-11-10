@@ -1135,13 +1135,14 @@ _cpp_lex_direct (cpp_reader *pfile)
 		      var = (const char*)cpp_token_as_text(pfile, result);
 		      if(CPP_OPTION(pfile, tup_linux) && strncmp(var, "CONFIG_", 7) == 0) {
 			      /* linux kernel */
-			      tup_set_macro(pfile, var+7, strlen(var+7), node);
+			      tup_set_macro(pfile, var+7, strlen(var+7), node,
+					    CPP_OPTION(pfile, tup_n_is_zero));
 		      } else if(CPP_OPTION(pfile, tup_uclibc) && strncmp(var, "__", 2) == 0) {
 			      /* uclibc */
 			      int len;
 			      len = strlen(var);
 			      if(len > 10 && var[len-1] == '_' && var[len-2] == '_') {
-				      tup_set_macro(pfile, var+2, len-4, node);
+				      tup_set_macro(pfile, var+2, len-4, node, 0);
 			      }
 		      } else if(CPP_OPTION(pfile, tup_busybox) && strncmp(var, "ENABLE_", 7) == 0) {
 			      /* busybox */
