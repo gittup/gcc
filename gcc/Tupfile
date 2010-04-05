@@ -460,7 +460,7 @@ generated_headers += $(gtype_headers)
 : {backend-objs} intl.o opts-common.o version.o prefix.o |> ^ AR %o^ rm -f %o; ar rcs %o %f |> libbackend.a
 
 : foreach $(cc-obj-y) | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -I. -I../include -I../libcpp/include -I../libdecnumber -I../libdecnumber/bid $(CFLAGS) $(CFLAGS_%f) -Wno-variadic-macros -c %f -o %o |> %B.o {cc-objs}
-: {cc-objs} libbackend.a ../libcpp/libcpp.a ../libdecnumber/libdecnumber.a ../../binutils/libiberty/libiberty.a |> ^ LD %o^ $(HOSTCC) %f -o %o -lmpfr -lgmp -rdynamic -ldl |> cc1
+: {cc-objs} libbackend.a ../libcpp/libcpp.a ../libdecnumber/libdecnumber.a ../../binutils/libiberty/libiberty.a $(GITTUP_ROOT)/tup/libtup_client.a |> ^ LD %o^ $(HOSTCC) %f -o %o -lmpfr -lgmp -rdynamic -ldl |> cc1
 
 : foreach crtstuff.c | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -c %f -o %o -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -finhibit-size-directive -fno-inline -fno-exceptions -fno-zero-initialized-in-bss -fno-toplevel-reorder -fno-tree-vectorize -DENABLE_DECIMAL_BID_FORMAT -DCRT_BEGIN -I../include -I. |> crtbegin.o
 : foreach crtstuff.c | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -c %f -o %o -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -finhibit-size-directive -fno-inline -fno-exceptions -fno-zero-initialized-in-bss -fno-toplevel-reorder -fno-tree-vectorize -DENABLE_DECIMAL_BID_FORMAT -DCRT_END -I../include -I. |> crtend.o

@@ -17,5 +17,5 @@ obj-y += symtab.c
 obj-y += traditional.c
 obj-y += tupvar.c
 
-: foreach $(obj-y) |> ^ HOSTCC %f^ gcc -I. -I../include -Iinclude $(CFLAGS) -c %f -o %o |> %B.o {objs}
+: foreach $(obj-y) |> ^ HOSTCC %f^ gcc -I. -I../include -Iinclude -I$(GITTUP_ROOT)/tup/src/tup/client $(CFLAGS) -c %f -o %o |> %B.o {objs}
 : {objs} |> ^ AR %o^ rm -f %o; ar crs %o %f |> libcpp.a
