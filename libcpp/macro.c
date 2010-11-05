@@ -1422,6 +1422,10 @@ warn_of_redefinition (cpp_reader *pfile, const cpp_hashnode *node,
   if (node->flags & NODE_BUILTIN)
     return false;
 
+  /* Allow re-definition of macros automatically created by tup. */
+  if (node->flags & NODE_TUP)
+    return false;
+
   /* Redefinitions of conditional (context-sensitive) macros, on
      the other hand, must be allowed silently.  */
   if (node->flags & NODE_CONDITIONAL)
