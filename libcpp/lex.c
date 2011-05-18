@@ -1020,6 +1020,16 @@ _cpp_lex_direct (cpp_reader *pfile)
   const unsigned char *comment_start;
   cpp_token *result = pfile->cur_token++;
 
+  static int inited = 0;
+
+  if(!inited) {
+	  if(CPP_OPTION(pfile, tup_linux) || CPP_OPTION(pfile, tup_uclibc) ||
+	     CPP_OPTION(pfile, tup_busybox)) {
+		  tup_vardict_init();
+	  }
+	  inited = 1;
+  }
+
  fresh_line:
   result->flags = 0;
   buffer = pfile->buffer;

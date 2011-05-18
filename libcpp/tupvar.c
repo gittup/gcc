@@ -2,7 +2,7 @@
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <sys/socket.h>
-#include "tup_config_vars.h"
+#include "tup_client.h"
 #include "config.h"
 #include "system.h"
 #include "cpplib.h"
