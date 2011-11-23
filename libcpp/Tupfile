@@ -18,4 +18,4 @@ obj-y += traditional.c
 obj-y += tupvar.c
 
 : foreach $(obj-y) | $(GITTUP_ROOT)/tup/tup_client.h |> ^ HOSTCC %f^ gcc -I. -I../include -Iinclude -I$(GITTUP_ROOT)/tup $(CFLAGS) -c %f -o %o |> %B.o {objs}
-: {objs} |> ^ AR %o^ rm -f %o; ar crs %o %f |> libcpp.a
+: {objs} |> ^ AR %o^ ar crs %o %f |> libcpp.a

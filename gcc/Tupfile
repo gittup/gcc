@@ -359,9 +359,9 @@ gen-y += gencheck.c
 gen-y += genconfig.c
 gen-y += gencodes.c
 
-: |> rm -f %o; gawk -f opt-gather.awk c.opt common.opt config/i386/i386.opt config/linux.opt > %o |> optionlist
-: optionlist |> rm -f %o; gawk -f opt-functions.awk -f opth-gen.awk < %f > %o |> options.h
-: optionlist |> rm -f %o; gawk -f opt-functions.awk -f optc-gen.awk -v header_name="config.h system.h coretypes.h tm.h" < %f > %o |> options.c
+: |> gawk -f opt-gather.awk c.opt common.opt config/i386/i386.opt config/linux.opt > %o |> optionlist
+: optionlist |> gawk -f opt-functions.awk -f opth-gen.awk < %f > %o |> options.h
+: optionlist |> gawk -f opt-functions.awk -f optc-gen.awk -v header_name="config.h system.h coretypes.h tm.h" < %f > %o |> options.c
 
 generated_headers += options.h
 
@@ -370,9 +370,9 @@ generated_headers += options.h
 : foreach genmodes.c errors.c |> !gen-cc |> %B-gen.o
 
 : genmodes-gen.o errors-gen.o $(BINUTILS_ROOT)/libiberty/libiberty.a |> !gen-ld |> genmodes
-: genmodes |> rm -f %o; ./%f -m > %o |> min-insn-modes.c
-: genmodes |> rm -f %o; ./%f > %o |> insn-modes.c
-: genmodes |> rm -f %o; ./%f -h > %o |> insn-modes.h
+: genmodes |> ./%f -m > %o |> min-insn-modes.c
+: genmodes |> ./%f > %o |> insn-modes.c
+: genmodes |> ./%f -h > %o |> insn-modes.h
 generated_headers += insn-modes.h
 
 : foreach $(gen-y) |> !gen-cc |> %B-gen.o
@@ -380,76 +380,76 @@ generated_headers += insn-modes.h
 gensupport = rtl-gen.o read-rtl-gen.o ggc-none-gen.o vec-gen.o min-insn-modes-gen.o gensupport-gen.o print-rtl-gen.o errors-gen.o $(BINUTILS_ROOT)/libiberty/libiberty.a
 
 : genconditions-gen.o $(gensupport) |> !gen-ld |> genconditions
-: genconditions |> rm -f %o; ./%f config/i386/i386.md > %o |> gencondmd.c
+: genconditions |> ./%f config/i386/i386.md > %o |> gencondmd.c
 
 : genpreds-gen.o $(gensupport) |> !gen-ld |> genpreds
-: genpreds |> rm -f %o; ./%f config/i386/i386.md > %o |> insn-preds.c
-: genpreds |> rm -f %o; ./%f -h config/i386/i386.md > %o |> tm-preds.h
-: genpreds |> rm -f %o; ./%f -c config/i386/i386.md > %o |> tm-constrs.h
+: genpreds |> ./%f config/i386/i386.md > %o |> insn-preds.c
+: genpreds |> ./%f -h config/i386/i386.md > %o |> tm-preds.h
+: genpreds |> ./%f -c config/i386/i386.md > %o |> tm-constrs.h
 generated_headers += tm-preds.h tm-constrs.h
 
 : gencheck-gen.o $(BINUTILS_ROOT)/libiberty/libiberty.a |> !gen-ld |> gencheck
-: gencheck |> rm -f %o; ./%f > %o |> tree-check.h
+: gencheck |> ./%f > %o |> tree-check.h
 generated_headers += tree-check.h
 
 : genconstants-gen.o $(gensupport) |> !gen-ld |> genconstants
-: genconstants |> rm -f %o; ./%f config/i386/i386.md > %o |> insn-constants.h
+: genconstants |> ./%f config/i386/i386.md > %o |> insn-constants.h
 generated_headers += insn-constants.h
 
 gen2-y += gencondmd.c
 : foreach $(gen2-y) |> !gen-cc |> %B-gen.o
 
 : gencondmd-gen.o $(BINUTILS_ROOT)/libiberty/libiberty.a |> !gen-ld |> gencondmd
-: gencondmd |> rm -f %o; ./%f > %o |> insn-conditions.md
+: gencondmd |> ./%f > %o |> insn-conditions.md
 
 : genautomata-gen.o $(gensupport) |> ^ LD %o^ $(HOSTCC) %f -o %o -lm |> genautomata
-: genautomata | insn-conditions.md |> rm -f %o; ./%f config/i386/i386.md insn-conditions.md > %o |> insn-automata.c
+: genautomata | insn-conditions.md |> ./%f config/i386/i386.md insn-conditions.md > %o |> insn-automata.c
 
 : genattrtab-gen.o $(gensupport) |> !gen-ld |> genattrtab
-: genattrtab | insn-conditions.md |> rm -f %o; ./%f config/i386/i386.md insn-conditions.md > %o |> insn-attrtab.c
+: genattrtab | insn-conditions.md |> ./%f config/i386/i386.md insn-conditions.md > %o |> insn-attrtab.c
 
 : genattr-gen.o $(gensupport) |> !gen-ld |> genattr
-: genattr | insn-conditions.md |> rm -f %o; ./%f config/i386/i386.md insn-conditions.md > %o |> insn-attr.h
+: genattr | insn-conditions.md |> ./%f config/i386/i386.md insn-conditions.md > %o |> insn-attr.h
 generated_headers += insn-attr.h
 
 : genemit-gen.o $(gensupport) |> !gen-ld |> genemit
-: genemit | insn-conditions.md |> rm -f %o; ./%f config/i386/i386.md insn-conditions.md > %o |> insn-emit.c
+: genemit | insn-conditions.md |> ./%f config/i386/i386.md insn-conditions.md > %o |> insn-emit.c
 
 : genextract-gen.o $(gensupport) |> !gen-ld |> genextract
-: genextract | insn-conditions.md |> rm -f %o; ./%f config/i386/i386.md insn-conditions.md > %o |> insn-extract.c
+: genextract | insn-conditions.md |> ./%f config/i386/i386.md insn-conditions.md > %o |> insn-extract.c
 
 : genopinit-gen.o $(gensupport) |> !gen-ld |> genopinit
-: genopinit | insn-conditions.md |> rm -f %o; ./%f config/i386/i386.md insn-conditions.md > %o |> insn-opinit.c
+: genopinit | insn-conditions.md |> ./%f config/i386/i386.md insn-conditions.md > %o |> insn-opinit.c
 
 : genoutput-gen.o $(gensupport) |> !gen-ld |> genoutput
-: genoutput | insn-conditions.md |> rm -f %o; ./%f config/i386/i386.md insn-conditions.md > %o |> insn-output.c
+: genoutput | insn-conditions.md |> ./%f config/i386/i386.md insn-conditions.md > %o |> insn-output.c
 
 : genpeep-gen.o $(gensupport) |> !gen-ld |> genpeep
-: genpeep | insn-conditions.md |> rm -f %o; ./%f config/i386/i386.md insn-conditions.md > %o |> insn-peep.c
+: genpeep | insn-conditions.md |> ./%f config/i386/i386.md insn-conditions.md > %o |> insn-peep.c
 
 : genrecog-gen.o $(gensupport) |> !gen-ld |> genrecog
-: genrecog | insn-conditions.md |> rm -f %o; ./%f config/i386/i386.md insn-conditions.md > %o |> insn-recog.c
+: genrecog | insn-conditions.md |> ./%f config/i386/i386.md insn-conditions.md > %o |> insn-recog.c
 
 : gengenrtl-gen.o $(gensupport) |> !gen-ld |> gengenrtl
-: gengenrtl |> rm -f %o; ./%f > %o |> genrtl.c
-: gengenrtl |> rm -f %o; ./%f -h > %o |> genrtl.h
+: gengenrtl |> ./%f > %o |> genrtl.c
+: gengenrtl |> ./%f -h > %o |> genrtl.h
 generated_headers += genrtl.h
 
 : genflags-gen.o $(gensupport) |> !gen-ld |> genflags
-: genflags | insn-conditions.md |> rm -f %o; ./%f config/i386/i386.md insn-conditions.md > %o |> insn-flags.h
+: genflags | insn-conditions.md |> ./%f config/i386/i386.md insn-conditions.md > %o |> insn-flags.h
 generated_headers += insn-flags.h
 
 : genconfig-gen.o $(gensupport) |> !gen-ld |> genconfig
-: genconfig | insn-conditions.md |> rm -f %o; ./%f config/i386/i386.md insn-conditions.md > %o |> insn-config.h
+: genconfig | insn-conditions.md |> ./%f config/i386/i386.md insn-conditions.md > %o |> insn-config.h
 generated_headers += insn-config.h
 
 : gencodes-gen.o $(gensupport) |> !gen-ld |> gencodes
-: gencodes | insn-conditions.md |> rm -f %o; ./%f config/i386/i386.md insn-conditions.md > %o |> insn-codes.h
+: gencodes | insn-conditions.md |> ./%f config/i386/i386.md insn-conditions.md > %o |> insn-codes.h
 generated_headers += insn-codes.h
 
 gtype_headers = gtype-c.h gt-c-parser.h gt-c-pragma.h gt-c-common.h gt-c-decl.h gt-tree-scalar-evolution.h gt-varasm.h gt-tree.h gt-stringpool.h gt-optabs.h gt-function.h gt-except.h gt-dwarf2out.h gt-dbxout.h gt-alias.h gt-integrate.h gt-i386.h gt-tree-ssa-structalias.h gt-ipa-reference.h gt-tree-phinodes.h gt-tree-ssa-propagate.h gt-cgraphunit.h gt-passes.h gt-targhooks.h gt-omp-low.h gt-tree-parloops.h gt-varpool.h gt-tree-nested.h gt-tree-profile.h gt-gimplify.h gt-tree-iterator.h gt-tree-ssa-address.h gt-tree-mudflap.h gt-gimple.h gt-stor-layout.h gt-sdbout.h gt-cfglayout.h gt-reginfo.h gt-lists.h gt-gcse.h gt-expr.h gt-explow.h gt-emit-rtl.h gt-dojump.h gt-tree-vect-generic.h gt-dwarf2asm.h gt-ipa-inline.h gt-cgraph.h gt-cselib.h gt-bitmap.h gt-caller-save.h gt-coverage.h
 : gengtype-gen.o gengtype-lex-gen.o gengtype-parse-gen.o errors-gen.o $(BINUTILS_ROOT)/libiberty/libiberty.a |> !gen-ld |> gengtype
-: gengtype | options.h |> rm -f %o; ./%f . gtyp-input.list |> gtype-desc.c $(gtype_headers)
+: gengtype | options.h |> ./%f . gtyp-input.list |> gtype-desc.c $(gtype_headers)
 generated_headers += $(gtype_headers)
 
 : options.c | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -I. -I../include $(CFLAGS) -DGCC_DRIVER -c %f -o %o |> gcc-options.o {objs}
@@ -457,7 +457,7 @@ generated_headers += $(gtype_headers)
 : {objs} ../libcpp/libcpp.a ../../binutils/libiberty/libiberty.a ../libdecnumber/libdecnumber.a |> ^ LD %o^ $(HOSTCC) %f -o %o |> xgcc
 
 : foreach $(backend-obj-y) | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -I. -I../include -I../libcpp/include -I../libdecnumber -I../libdecnumber/bid $(CFLAGS) $(CFLAGS_%f) -Wno-variadic-macros -c %f -o %o |> %B.o {backend-objs}
-: {backend-objs} intl.o opts-common.o version.o prefix.o |> ^ AR %o^ rm -f %o; ar rcs %o %f |> libbackend.a
+: {backend-objs} intl.o opts-common.o version.o prefix.o |> ^ AR %o^ ar rcs %o %f |> libbackend.a
 
 : foreach $(cc-obj-y) | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -I. -I../include -I../libcpp/include -I../libdecnumber -I../libdecnumber/bid $(CFLAGS) $(CFLAGS_%f) -Wno-variadic-macros -c %f -o %o |> %B.o {cc-objs}
 : {cc-objs} libbackend.a ../libcpp/libcpp.a ../libdecnumber/libdecnumber.a ../../binutils/libiberty/libiberty.a $(GITTUP_ROOT)/tup/libtup_client.a |> ^ LD %o^ $(HOSTCC) %f -o %o -lmpfr -lgmp -rdynamic -ldl |> cc1
@@ -687,4 +687,4 @@ cc_proper = ./xgcc -B. -B$(BINUTILS_ROOT)/ld -B$(BINUTILS_ROOT)/gas -nostdinc -I
 
 : foreach $(stupid-libgcc-y) | $(compiler_proper) $(generated_headers) |> ^ CC %f^ $(cc_proper) -O2 -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition  -isystem ./include -fPIC -DHAVE_GTHR_DEFAULT -DIN_LIBGCC2 -D__GCC_FLOAT_NOT_NEEDED -DENABLE_DECIMAL_BID_FORMAT -DHAVE_CC_TLS -DUSE_TLS -fvisibility=hidden -DHIDE_EXPORTS -I. -I../include -I../libgcc -I$(LINUX_ROOT)/include -I$(LINUX_ROOT)/arch/x86/include -DL%B -include $(UCLIBC_ROOT)/include/libc-symbols.h -c %f -o %o |> %B.o {libgcc-objs}
 : foreach $(libgcc-y) | $(compiler_proper) $(generated_headers) |> ^ CC %f^ $(cc_proper) -O2 -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition  -isystem ./include -fPIC -DHAVE_GTHR_DEFAULT -DIN_LIBGCC2 -D__GCC_FLOAT_NOT_NEEDED -DENABLE_DECIMAL_BID_FORMAT -DHAVE_CC_TLS -DUSE_TLS -Wno-missing-prototypes -Wno-type-limits -fvisibility=hidden -DHIDE_EXPORTS -I. -I../include -I../libgcc -c %f -o %B.o |> %B.o {libgcc-objs}
-: {libgcc-objs} |> ^ AR %o^ rm -f %o; ar crs %o %f |> libgcc.a
+: {libgcc-objs} |> ^ AR %o^ ar crs %o %f |> libgcc.a
