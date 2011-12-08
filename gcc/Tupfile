@@ -364,6 +364,9 @@ gen-y += gencodes.c
 : optionlist |> gawk -f opt-functions.awk -f optc-gen.awk -v header_name="config.h system.h coretypes.h tm.h" < %f > %o |> options.c
 
 generated_headers += options.h
+generated_headers += auto-host.h
+
+: @(TUP_ARCH)/auto-host.h |> !ln |> auto-host.h
 
 !gen-cc = | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -c %f -o %o -I. -I../include -I../libcpp/include $(CFLAGS) -DGENERATOR_FILE |>
 !gen-ld = |> ^ LD %o^ $(HOSTCC) %f -o %o |>
@@ -461,6 +464,8 @@ generated_headers += $(gtype_headers)
 
 : foreach $(cc-obj-y) | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -I. -I../include -I../libcpp/include -I../libdecnumber -I../libdecnumber/bid $(CFLAGS) $(CFLAGS_%f) -Wno-variadic-macros -c %f -o %o |> %B.o {cc-objs}
 : {cc-objs} libbackend.a ../libcpp/libcpp.a ../libdecnumber/libdecnumber.a ../../binutils/libiberty/libiberty.a $(GITTUP_ROOT)/tup/libtup_client.a |> ^ LD %o^ $(HOSTCC) %f -o %o -lmpfr -lgmp -rdynamic -ldl |> cc1
+
+HOSTCC += -m32
 
 : foreach crtstuff.c | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -c %f -o %o -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -finhibit-size-directive -fno-inline -fno-exceptions -fno-zero-initialized-in-bss -fno-toplevel-reorder -fno-tree-vectorize -DENABLE_DECIMAL_BID_FORMAT -DCRT_BEGIN -I../include -I. |> crtbegin.o
 : foreach crtstuff.c | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -c %f -o %o -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -finhibit-size-directive -fno-inline -fno-exceptions -fno-zero-initialized-in-bss -fno-toplevel-reorder -fno-tree-vectorize -DENABLE_DECIMAL_BID_FORMAT -DCRT_END -I../include -I. |> crtend.o
