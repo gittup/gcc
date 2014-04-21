@@ -457,20 +457,20 @@ generated_headers += $(gtype_headers)
 
 : options.c | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -I. -I../include $(CFLAGS) -DGCC_DRIVER -c %f -o %o |> gcc-options.o {objs}
 : foreach $(obj-y) | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -I. -I../include $(CFLAGS) $(CFLAGS_%f) -c %f -o %o |> %B.o {objs}
-: {objs} ../libcpp/libcpp.a ../../binutils/libiberty/libiberty.a ../libdecnumber/libdecnumber.a |> ^ LD %o^ $(HOSTCC) %f -o %o |> xgcc
+: {objs} ../libcpp/libcpp.a ../../binutils/libiberty/libiberty.a ../libdecnumber/libdecnumber.a |> ^o LD %o^ $(HOSTCC) %f -o %o |> xgcc | $(GITTUP_ROOT)/<compiler_files>
 
 : foreach $(backend-obj-y) | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -I. -I../include -I../libcpp/include -I../libdecnumber -I../libdecnumber/bid $(CFLAGS) $(CFLAGS_%f) -Wno-variadic-macros -c %f -o %o |> %B.o {backend-objs}
 : {backend-objs} intl.o opts-common.o version.o prefix.o |> ^ AR %o^ ar rcs %o %f |> libbackend.a
 
 : foreach $(cc-obj-y) | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -I. -I../include -I../libcpp/include -I../libdecnumber -I../libdecnumber/bid $(CFLAGS) $(CFLAGS_%f) -Wno-variadic-macros -c %f -o %o |> %B.o {cc-objs}
-: {cc-objs} libbackend.a ../libcpp/libcpp.a ../libdecnumber/libdecnumber.a ../../binutils/libiberty/libiberty.a $(GITTUP_ROOT)/tup/libtup_client.a |> ^ LD %o^ $(HOSTCC) %f -o %o -lmpfr -lgmp -rdynamic -ldl |> cc1
+: {cc-objs} libbackend.a ../libcpp/libcpp.a ../libdecnumber/libdecnumber.a ../../binutils/libiberty/libiberty.a $(GITTUP_ROOT)/tup/libtup_client.a |> ^o LD %o^ $(HOSTCC) %f -o %o -lmpfr -lgmp -rdynamic -ldl |> cc1 | $(GITTUP_ROOT)/<compiler_files>
 
 HOSTCC += -m32
 
-: foreach crtstuff.c | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -c %f -o %o -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -finhibit-size-directive -fno-inline -fno-exceptions -fno-zero-initialized-in-bss -fno-toplevel-reorder -fno-tree-vectorize -DENABLE_DECIMAL_BID_FORMAT -DCRT_BEGIN -I../include -I. |> crtbegin.o
-: foreach crtstuff.c | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -c %f -o %o -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -finhibit-size-directive -fno-inline -fno-exceptions -fno-zero-initialized-in-bss -fno-toplevel-reorder -fno-tree-vectorize -DENABLE_DECIMAL_BID_FORMAT -DCRT_END -I../include -I. |> crtend.o
-: foreach crtstuff.c | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -fPIC -c %f -o %o -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -finhibit-size-directive -fno-inline -fno-exceptions -fno-zero-initialized-in-bss -fno-toplevel-reorder -fno-tree-vectorize -DENABLE_DECIMAL_BID_FORMAT -DCRT_BEGIN -DCRTSTUFFS_O -I../include -I.  |> crtbeginS.o
-: foreach crtstuff.c | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -fPIC -c %f -o %o -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -finhibit-size-directive -fno-inline -fno-exceptions -fno-zero-initialized-in-bss -fno-toplevel-reorder -fno-tree-vectorize -DENABLE_DECIMAL_BID_FORMAT -DCRT_END -DCRTSTUFFS_O -I../include -I.  |> crtendS.o
+: foreach crtstuff.c | $(generated_headers) |> ^o HOSTCC %f^ $(HOSTCC) -c %f -o %o -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -finhibit-size-directive -fno-inline -fno-exceptions -fno-zero-initialized-in-bss -fno-toplevel-reorder -fno-tree-vectorize -DENABLE_DECIMAL_BID_FORMAT -DCRT_BEGIN -I../include -I. |> crtbegin.o | $(GITTUP_ROOT)/<compiler_files>
+: foreach crtstuff.c | $(generated_headers) |> ^o HOSTCC %f^ $(HOSTCC) -c %f -o %o -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -finhibit-size-directive -fno-inline -fno-exceptions -fno-zero-initialized-in-bss -fno-toplevel-reorder -fno-tree-vectorize -DENABLE_DECIMAL_BID_FORMAT -DCRT_END -I../include -I. |> crtend.o | $(GITTUP_ROOT)/<compiler_files>
+: foreach crtstuff.c | $(generated_headers) |> ^o HOSTCC %f^ $(HOSTCC) -fPIC -c %f -o %o -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -finhibit-size-directive -fno-inline -fno-exceptions -fno-zero-initialized-in-bss -fno-toplevel-reorder -fno-tree-vectorize -DENABLE_DECIMAL_BID_FORMAT -DCRT_BEGIN -DCRTSTUFFS_O -I../include -I.  |> crtbeginS.o
+: foreach crtstuff.c | $(generated_headers) |> ^o HOSTCC %f^ $(HOSTCC) -fPIC -c %f -o %o -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -finhibit-size-directive -fno-inline -fno-exceptions -fno-zero-initialized-in-bss -fno-toplevel-reorder -fno-tree-vectorize -DENABLE_DECIMAL_BID_FORMAT -DCRT_END -DCRTSTUFFS_O -I../include -I.  |> crtendS.o
 
 stupid-libgcc-y += _muldi3.c
 stupid-libgcc-y += _negdi2.c
@@ -692,4 +692,4 @@ cc_proper = ./xgcc -B. -B$(BINUTILS_ROOT)/ld -B$(BINUTILS_ROOT)/gas -nostdinc -I
 
 : foreach $(stupid-libgcc-y) | $(compiler_proper) $(generated_headers) |> ^ CC %f^ $(cc_proper) -O2 -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition  -isystem ./include -fPIC -DHAVE_GTHR_DEFAULT -DIN_LIBGCC2 -D__GCC_FLOAT_NOT_NEEDED -DENABLE_DECIMAL_BID_FORMAT -DHAVE_CC_TLS -DUSE_TLS -fvisibility=hidden -DHIDE_EXPORTS -I. -I../include -I../libgcc -I$(LINUX_ROOT)/include -I$(LINUX_ROOT)/arch/x86/include -DL%B -include $(UCLIBC_ROOT)/include/libc-symbols.h -c %f -o %o |> %B.o {libgcc-objs}
 : foreach $(libgcc-y) | $(compiler_proper) $(generated_headers) |> ^ CC %f^ $(cc_proper) -O2 -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition  -isystem ./include -fPIC -DHAVE_GTHR_DEFAULT -DIN_LIBGCC2 -D__GCC_FLOAT_NOT_NEEDED -DENABLE_DECIMAL_BID_FORMAT -DHAVE_CC_TLS -DUSE_TLS -Wno-missing-prototypes -Wno-type-limits -fvisibility=hidden -DHIDE_EXPORTS -I. -I../include -I../libgcc -c %f -o %B.o |> %B.o {libgcc-objs}
-: {libgcc-objs} |> ^ AR %o^ ar crs %o %f |> libgcc.a
+: {libgcc-objs} |> ^o AR %o^ ar crs %o %f |> libgcc.a | $(GITTUP_ROOT)/<compiler_files>
