@@ -457,13 +457,13 @@ generated_headers += $(gtype_headers)
 
 : options.c | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -I. -I../include $(CFLAGS) -DGCC_DRIVER -c %f -o %o |> gcc-options.o {objs}
 : foreach $(obj-y) | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -I. -I../include $(CFLAGS) $(CFLAGS_%f) -c %f -o %o |> %B.o {objs}
-: {objs} ../libcpp/libcpp.a ../../binutils/libiberty/libiberty.a ../libdecnumber/libdecnumber.a |> ^o LD %o^ $(HOSTCC) %f -o %o |> xgcc | $(GITTUP_ROOT)/<compiler_files>
+: {objs} ../libcpp/libcpp.a $(BINUTILS_ROOT)/libiberty/libiberty.a ../libdecnumber/libdecnumber.a |> ^o LD %o^ $(HOSTCC) %f -o %o |> xgcc | $(GITTUP_ROOT)/<compiler_files>
 
 : foreach $(backend-obj-y) | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -I. -I../include -I../libcpp/include -I../libdecnumber -I../libdecnumber/bid $(CFLAGS) $(CFLAGS_%f) -Wno-variadic-macros -c %f -o %o |> %B.o {backend-objs}
 : {backend-objs} intl.o opts-common.o version.o prefix.o |> ^ AR %o^ ar rcs %o %f |> libbackend.a
 
 : foreach $(cc-obj-y) | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -I. -I../include -I../libcpp/include -I../libdecnumber -I../libdecnumber/bid $(CFLAGS) $(CFLAGS_%f) -Wno-variadic-macros -c %f -o %o |> %B.o {cc-objs}
-: {cc-objs} libbackend.a ../libcpp/libcpp.a ../libdecnumber/libdecnumber.a ../../binutils/libiberty/libiberty.a $(GITTUP_ROOT)/tup/libtup_client.a |> ^o LD %o^ $(HOSTCC) %f -o %o -lmpfr -lgmp -rdynamic -ldl |> cc1 | $(GITTUP_ROOT)/<compiler_files>
+: {cc-objs} libbackend.a ../libcpp/libcpp.a ../libdecnumber/libdecnumber.a $(BINUTILS_ROOT)/libiberty/libiberty.a $(GITTUP_ROOT)/tup/libtup_client.a |> ^o LD %o^ $(HOSTCC) %f -o %o -lmpfr -lgmp -rdynamic -ldl |> cc1 | $(GITTUP_ROOT)/<compiler_files>
 
 HOSTCC += -m32
 
