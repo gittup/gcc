@@ -467,7 +467,10 @@ generated_headers += $(gtype_headers)
 
 HOSTCC += -m32
 
-: foreach crtstuff.c | $(generated_headers) |> ^o HOSTCC %f^ $(HOSTCC) -c %f -o %o -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -finhibit-size-directive -fno-inline -fno-exceptions -fno-zero-initialized-in-bss -fno-toplevel-reorder -fno-tree-vectorize -DENABLE_DECIMAL_BID_FORMAT -DCRT_BEGIN -I../include -I. |> crtbegin.o | $(GITTUP_ROOT)/<compiler_files>
+# -mrelax-relocations is needed when building with a newer host gcc, since our
+# binutils doesn't support certain reloactions that were added in in
+# binutils-2.26
+: foreach crtstuff.c | $(generated_headers) |> ^o HOSTCC %f^ $(HOSTCC) -Wa,-mrelax-relocations=no -c %f -o %o -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -finhibit-size-directive -fno-inline -fno-exceptions -fno-zero-initialized-in-bss -fno-toplevel-reorder -fno-tree-vectorize -DENABLE_DECIMAL_BID_FORMAT -DCRT_BEGIN -I../include -I. |> crtbegin.o | $(GITTUP_ROOT)/<compiler_files>
 : foreach crtstuff.c | $(generated_headers) |> ^o HOSTCC %f^ $(HOSTCC) -c %f -o %o -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -finhibit-size-directive -fno-inline -fno-exceptions -fno-zero-initialized-in-bss -fno-toplevel-reorder -fno-tree-vectorize -DENABLE_DECIMAL_BID_FORMAT -DCRT_END -I../include -I. |> crtend.o | $(GITTUP_ROOT)/<compiler_files>
 : foreach crtstuff.c | $(generated_headers) |> ^o HOSTCC %f^ $(HOSTCC) -fPIC -c %f -o %o -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -finhibit-size-directive -fno-inline -fno-exceptions -fno-zero-initialized-in-bss -fno-toplevel-reorder -fno-tree-vectorize -DENABLE_DECIMAL_BID_FORMAT -DCRT_BEGIN -DCRTSTUFFS_O -I../include -I.  |> crtbeginS.o
 : foreach crtstuff.c | $(generated_headers) |> ^o HOSTCC %f^ $(HOSTCC) -fPIC -c %f -o %o -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -finhibit-size-directive -fno-inline -fno-exceptions -fno-zero-initialized-in-bss -fno-toplevel-reorder -fno-tree-vectorize -DENABLE_DECIMAL_BID_FORMAT -DCRT_END -DCRTSTUFFS_O -I../include -I.  |> crtendS.o
