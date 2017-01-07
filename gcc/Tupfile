@@ -467,13 +467,17 @@ generated_headers += $(gtype_headers)
 
 HOSTCC += -m32
 
-# -mrelax-relocations is needed when building with a newer host gcc, since our
-# binutils doesn't support certain reloactions that were added in in
-# binutils-2.26
-: foreach crtstuff.c | $(generated_headers) |> ^o HOSTCC %f^ $(HOSTCC) -Wa,-mrelax-relocations=no -c %f -o %o -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -finhibit-size-directive -fno-inline -fno-exceptions -fno-zero-initialized-in-bss -fno-toplevel-reorder -fno-tree-vectorize -DENABLE_DECIMAL_BID_FORMAT -DCRT_BEGIN -I../include -I. |> crtbegin.o | $(GITTUP_ROOT)/<compiler_files>
-: foreach crtstuff.c | $(generated_headers) |> ^o HOSTCC %f^ $(HOSTCC) -c %f -o %o -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -finhibit-size-directive -fno-inline -fno-exceptions -fno-zero-initialized-in-bss -fno-toplevel-reorder -fno-tree-vectorize -DENABLE_DECIMAL_BID_FORMAT -DCRT_END -I../include -I. |> crtend.o | $(GITTUP_ROOT)/<compiler_files>
-: foreach crtstuff.c | $(generated_headers) |> ^o HOSTCC %f^ $(HOSTCC) -fPIC -c %f -o %o -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -finhibit-size-directive -fno-inline -fno-exceptions -fno-zero-initialized-in-bss -fno-toplevel-reorder -fno-tree-vectorize -DENABLE_DECIMAL_BID_FORMAT -DCRT_BEGIN -DCRTSTUFFS_O -I../include -I.  |> crtbeginS.o
-: foreach crtstuff.c | $(generated_headers) |> ^o HOSTCC %f^ $(HOSTCC) -fPIC -c %f -o %o -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -finhibit-size-directive -fno-inline -fno-exceptions -fno-zero-initialized-in-bss -fno-toplevel-reorder -fno-tree-vectorize -DENABLE_DECIMAL_BID_FORMAT -DCRT_END -DCRTSTUFFS_O -I../include -I.  |> crtendS.o
+compiler_proper = cc1 xgcc $(BINUTILS_ROOT)/gas/as
+cc_proper = ./xgcc -B. -B$(BINUTILS_ROOT)/ld -B$(BINUTILS_ROOT)/gas -nostdinc -I./ginclude -isystem ../include-fixed -isystem $(UCLIBC_ROOT)/include/ -isystem $(UCLIBC_ROOT)/libpthread/linuxthreads.old/sysdeps/i386 -ftup-uclibc
+
+crtflags += -include $(UCLIBC_ROOT)/include/libc-symbols.h
+crtflags += -I$(LINUX_ROOT)/include
+crtflags += -I$(LINUX_ROOT)/arch/x86/include
+
+: foreach crtstuff.c | $(generated_headers) $(compiler_proper) |> ^o CC %f^ $(cc_proper) $(crtflags) -c %f -o %o -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -finhibit-size-directive -fno-inline -fno-exceptions -fno-zero-initialized-in-bss -fno-toplevel-reorder -fno-tree-vectorize -DENABLE_DECIMAL_BID_FORMAT -DCRT_BEGIN -I../include -I. |> crtbegin.o | $(GITTUP_ROOT)/<compiler_files>
+: foreach crtstuff.c | $(generated_headers) $(compiler_proper) |> ^o CC %f^ $(cc_proper) $(crtflags) -c %f -o %o -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -finhibit-size-directive -fno-inline -fno-exceptions -fno-zero-initialized-in-bss -fno-toplevel-reorder -fno-tree-vectorize -DENABLE_DECIMAL_BID_FORMAT -DCRT_END -I../include -I. |> crtend.o | $(GITTUP_ROOT)/<compiler_files>
+: foreach crtstuff.c | $(generated_headers) $(compiler_proper) |> ^o CC %f^ $(cc_proper) $(crtflags) -fPIC -c %f -o %o -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -finhibit-size-directive -fno-inline -fno-exceptions -fno-zero-initialized-in-bss -fno-toplevel-reorder -fno-tree-vectorize -DENABLE_DECIMAL_BID_FORMAT -DCRT_BEGIN -DCRTSTUFFS_O -I../include -I.  |> crtbeginS.o
+: foreach crtstuff.c | $(generated_headers) $(compiler_proper) |> ^o CC %f^ $(cc_proper) $(crtflags) -fPIC -c %f -o %o -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -finhibit-size-directive -fno-inline -fno-exceptions -fno-zero-initialized-in-bss -fno-toplevel-reorder -fno-tree-vectorize -DENABLE_DECIMAL_BID_FORMAT -DCRT_END -DCRTSTUFFS_O -I../include -I.  |> crtendS.o
 
 stupid-libgcc-y += _muldi3.c
 stupid-libgcc-y += _negdi2.c
@@ -689,9 +693,6 @@ libgcc-y += config/soft-fp/trunctfdf2.c
 libgcc-y += config/soft-fp/trunctfxf2.c
 
 libgcc-y += ../libgcc/config/i386/32/tf-signs.c
-
-compiler_proper = cc1 xgcc $(BINUTILS_ROOT)/gas/as
-cc_proper = ./xgcc -B. -B$(BINUTILS_ROOT)/ld -B$(BINUTILS_ROOT)/gas -nostdinc -I./ginclude -isystem ../include-fixed -isystem $(UCLIBC_ROOT)/include/ -isystem $(UCLIBC_ROOT)/libpthread/linuxthreads.old/sysdeps/i386 -ftup-uclibc
 
 : foreach $(stupid-libgcc-y) | $(compiler_proper) $(generated_headers) |> ^ CC %f^ $(cc_proper) -O2 -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition  -isystem ./include -fPIC -DHAVE_GTHR_DEFAULT -DIN_LIBGCC2 -D__GCC_FLOAT_NOT_NEEDED -DENABLE_DECIMAL_BID_FORMAT -DHAVE_CC_TLS -DUSE_TLS -fvisibility=hidden -DHIDE_EXPORTS -I. -I../include -I../libgcc -I$(LINUX_ROOT)/include -I$(LINUX_ROOT)/arch/x86/include -DL%B -include $(UCLIBC_ROOT)/include/libc-symbols.h -c %f -o %o |> %B.o {libgcc-objs}
 : foreach $(libgcc-y) | $(compiler_proper) $(generated_headers) |> ^ CC %f^ $(cc_proper) -O2 -DIN_GCC -W -Wall -Wwrite-strings -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition  -isystem ./include -fPIC -DHAVE_GTHR_DEFAULT -DIN_LIBGCC2 -D__GCC_FLOAT_NOT_NEEDED -DENABLE_DECIMAL_BID_FORMAT -DHAVE_CC_TLS -DUSE_TLS -Wno-missing-prototypes -Wno-type-limits -fvisibility=hidden -DHIDE_EXPORTS -I. -I../include -I../libgcc -c %f -o %B.o |> %B.o {libgcc-objs}
