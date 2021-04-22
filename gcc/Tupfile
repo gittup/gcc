@@ -366,7 +366,7 @@ gen-y += gencodes.c
 generated_headers += options.h
 generated_headers += auto-host.h
 
-: @(TUP_ARCH)/auto-host.h |> !ln |> auto-host.h
+: @(TUP_ARCH)/auto-host.h |> !tup_ln |> auto-host.h
 
 !gen-cc = | $(generated_headers) |> ^ HOSTCC %f^ $(HOSTCC) -c %f -o %o -I. -I../include -I../libcpp/include $(CFLAGS) -DGENERATOR_FILE |>
 !gen-ld = |> ^ LD %o^ $(HOSTCC) %f -o %o |>
